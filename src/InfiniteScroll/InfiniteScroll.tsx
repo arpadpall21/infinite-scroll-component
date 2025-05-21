@@ -1,21 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, type ReactNode } from 'react';
 import style from './InfiniteScroll.module.scss';
 
 const cellWidth = 200;
 
-const InfiniteScroll = () => {
+interface Props {
+  children: ReactNode[];
+}
+
+const InfiniteScroll: React.FC<Props> = ({ children }) => {
+  const [members, setMembers] = useState<ReactNode[]>(children);
+
+
+
+
+  
   const [childIds, setChildIds] = useState<number[]>([0, 1, 2, 3, 4, 5]);
 
   const [position, setPosition] = useState({ x: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0 });
   const [gridOffset, setGridOffset] = useState<number>(0);
-
-  useEffect(() => {
-    console.log('--- use effect ---')
-    console.log(gridOffset)
-  }, [gridOffset])
-
 
   function handleMouseMove(e: React.MouseEvent) {
     if (isDragging) {
@@ -41,8 +45,6 @@ const InfiniteScroll = () => {
     }
   }
 
-
-
   function handleMouseDown(e: React.MouseEvent) {
     e.preventDefault();
     setIsDragging(true);
@@ -50,13 +52,7 @@ const InfiniteScroll = () => {
   }
 
   return (
-    <div
-      className={style.infiniteScrollContainer}
-      onMouseLeave={() => {
-        console.log('--- mouse left ---')
-        setIsDragging(false)
-      }}
-      >
+    <div className={style.infiniteScrollContainer} onMouseLeave={() => setIsDragging(false)}>
       <div
         style={{
           transform: `translate(${position.x}px`,
