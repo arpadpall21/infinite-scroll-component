@@ -1,19 +1,22 @@
-import React, { useState, type ReactNode } from 'react';
+import React, { useState, useEffect, type ReactNode } from 'react';
 import style from './InfiniteScroll.module.scss';
 
 const cellWidth = 200;
 
 interface Props {
-  children: ReactNode[];
+  children?: ReactNode[];
 }
 
 const InfiniteScroll: React.FC<Props> = ({ children }) => {
-  const [members, setMembers] = useState<ReactNode[]>(children);
+  const [members, setMembers] = useState<ReactNode[]>([]);
+
+  useEffect(() => {
+    if (children) {
+      setMembers(children);
+    }
+  }, [children]);
 
 
-
-
-  
   const [childIds, setChildIds] = useState<number[]>([0, 1, 2, 3, 4, 5]);
 
   const [position, setPosition] = useState({ x: 0 });
@@ -63,7 +66,7 @@ const InfiniteScroll: React.FC<Props> = ({ children }) => {
         onMouseMove={handleMouseMove}
         onMouseUp={() => setIsDragging(false)}
       >
-        {childIds.map((id) => (
+        {members.map((member, i) => (
           <div 
             style={{
               display: 'inline-block',
@@ -73,9 +76,11 @@ const InfiniteScroll: React.FC<Props> = ({ children }) => {
               backgroundColor: 'orange',
               opacity: 0.9,
             }}
-            key={id}>{id}
-          </div>)
-        )}
+            key={i}
+          >
+          {member}
+          </div>
+        ))}
       </div>
     </div>
   );
