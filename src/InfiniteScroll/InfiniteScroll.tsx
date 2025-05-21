@@ -4,10 +4,12 @@ import style from './InfiniteScroll.module.scss';
 const cellWidth = 200;
 
 interface Props {
+  parentWidth: number;
+  membersWidth: number;
   children?: ReactNode[];
 }
 
-const InfiniteScroll: React.FC<Props> = ({ children }) => {
+const InfiniteScroll: React.FC<Props> = ({ parentWidth, membersWidth, children }) => {
   const [members, setMembers] = useState<ReactNode[]>([]);
 
   useEffect(() => {
@@ -55,7 +57,11 @@ const InfiniteScroll: React.FC<Props> = ({ children }) => {
   }
 
   return (
-    <div className={style.infiniteScrollContainer} onMouseLeave={() => setIsDragging(false)}>
+    <div
+      className={style.infiniteScrollContainer}
+      style={{ width: parentWidth }}
+      onMouseLeave={() => setIsDragging(false)}
+    >
       <div
         style={{
           transform: `translate(${position.x}px`,
@@ -67,12 +73,12 @@ const InfiniteScroll: React.FC<Props> = ({ children }) => {
         onMouseUp={() => setIsDragging(false)}
       >
         {members.map((member, i) => (
-          <div 
+          <div
             style={{
               display: 'inline-block',
               border: 'solid 1px red',
               height: 130,
-              width: cellWidth,
+              width: membersWidth,
               backgroundColor: 'orange',
               opacity: 0.9,
             }}
