@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import style from './InfiniteScroll.module.scss';
 
 const cellWidth = 200;
 
 const InfiniteScroll = () => {
-  const [childIds, setChildIds] = useState<number[]>([0, 1, 2, 3, 4, 5, 6, 7]);
+  const [childIds, setChildIds] = useState<number[]>([0, 1, 2, 3, 4, 5]);
 
   const [position, setPosition] = useState({ x: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -25,7 +26,7 @@ const InfiniteScroll = () => {
         setGridOffset(gridOffset + cellWidth);
         
         
-        const childIdsClone = [...childIds]
+        const childIdsClone = [...childIds];
         const originalLength = childIdsClone.length;
         childIdsClone.unshift(childIdsClone[0] - 1);
         setChildIds(childIdsClone.slice(0, originalLength));
@@ -45,19 +46,12 @@ const InfiniteScroll = () => {
   function handleMouseDown(e: React.MouseEvent) {
     e.preventDefault();
     setIsDragging(true);
-    setOffset({ x: e.clientX - position.x  });
+    setOffset({ x: e.clientX - position.x });
   }
 
   return (
-    <div 
-      style={{
-        position: 'relative',
-        border: 'solid 3px black',
-        height: 150,
-        width: 1300,
-        margin: 'auto',
-        overflow: 'hidden'
-      }}
+    <div
+      className={style.infiniteScrollContainer}
       onMouseLeave={() => {
         console.log('--- mouse left ---')
         setIsDragging(false)
@@ -65,12 +59,9 @@ const InfiniteScroll = () => {
       >
       <div
         style={{
-          position: 'absolute',
-          right: gridOffset,
-          border: 'solid 5px green',
-          textWrap: 'nowrap',
           transform: `translate(${position.x}px`,
           cursor: isDragging ? 'grabbing' : 'grab',
+          right: gridOffset,
         }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
