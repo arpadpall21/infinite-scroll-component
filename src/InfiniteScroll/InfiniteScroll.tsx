@@ -9,12 +9,12 @@ interface Dimensions {
 interface Props {
   parentSize: Dimensions;
   membersSize: Dimensions;
-  items: ReactElement[];
-  handleOverflow: (side: 'left' | 'right', _items: ReactElement[]) => ReactElement[];
+  members: ReactElement[];
+  handleOverflow: (side: 'left' | 'right', members: ReactElement[]) => ReactElement[];
 }
 
-const InfiniteScroll: React.FC<Props> = ({ items, parentSize, membersSize, handleOverflow }) => {
-  const [_items, _setItems] = useState<ReactElement[]>(items);
+const InfiniteScroll: React.FC<Props> = ({ members, parentSize, membersSize, handleOverflow }) => {
+  const [items, setItems] = useState<ReactElement[]>(members);
   const [position, setPosition] = useState({ x: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0 });
@@ -26,10 +26,10 @@ const InfiniteScroll: React.FC<Props> = ({ items, parentSize, membersSize, handl
 
       if (position.x > gridOffset + membersSize.width) {
         setGridOffset(gridOffset + membersSize.width);
-        _setItems(handleOverflow('right', _items));
+        setItems(handleOverflow('right', items));
       } else if (position.x < gridOffset) {
         setGridOffset(gridOffset - membersSize.width);
-        _setItems(handleOverflow('left', _items));
+        setItems(handleOverflow('left', items));
       }
     }
   }
@@ -56,12 +56,11 @@ const InfiniteScroll: React.FC<Props> = ({ items, parentSize, membersSize, handl
         onMouseMove={handleMouseMove}
         onMouseUp={() => setIsDragging(false)}
       >
-        {_items.map((item, i) => (
+        {items.map((item, i) => (
           <div
             style={{
               display: 'inline-block',
               width: membersSize.width,
-              height: membersSize.height,
             }}
             key={i}
           >
