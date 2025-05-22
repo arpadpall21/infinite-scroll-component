@@ -6,16 +6,15 @@ interface Props {
   handleOverflow: (side: 'left' | 'right', members: ReactElement[]) => ReactElement[];
 }
 
+const parentWidth: number = 1000;
+const memberWidth: number = 200;
+
 const InfiniteScroll: React.FC<Props> = ({ members, handleOverflow }) => {
   const [items, setItems] = useState<ReactElement[]>(members);
   const [position, setPosition] = useState({ x: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0 });
   const [gridOffset, setGridOffset] = useState<number>(0);
-
-
-  const memberWidth: number = 200;
-
 
   function handleMouseMove(e: React.MouseEvent) {
     if (isDragging) {
@@ -38,7 +37,11 @@ const InfiniteScroll: React.FC<Props> = ({ members, handleOverflow }) => {
   }
 
   return (
-    <div className={style.infiniteScrollContainer} onMouseLeave={() => setIsDragging(false)}>
+    <div
+      className={style.infiniteScrollContainer}
+      style={{ width: parentWidth }}
+      onMouseLeave={() => setIsDragging(false)}
+    >
       <div
         style={{
           transform: `translate(${position.x}px`,

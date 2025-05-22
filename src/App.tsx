@@ -3,12 +3,15 @@ import InfiniteScroll from './InfiniteScroll/InfiniteScroll';
 import Box, { type BoxProps } from './InfiniteScroll/Box/Box';
 
 const defaultMembers: ReactElement[] = [
+  <Box id={-1} />,
   <Box id={0} />,
-  <Box id={1} />,
+  <Box id={1} />, // 1st visible
   <Box id={2} />,
   <Box id={3} />,
   <Box id={4} />,
-  <Box id={5} />,
+  <Box id={5} />, // last visible
+  <Box id={6} />,
+  <Box id={7} />,
 ];
 
 const App = () => {
