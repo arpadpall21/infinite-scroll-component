@@ -14,16 +14,16 @@ const InfiniteScroll: React.FC<Props> = ({ members, handleOverflow }) => {
   const [position, setPosition] = useState({ x: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0 });
-  const [gridOffset, setGridOffset] = useState<number>(0);
+  const [gridOffset, setGridOffset] = useState<number>(0 - memberWidth * 2);
 
   function handleMouseMove(e: React.MouseEvent) {
     if (isDragging) {
       setPosition({ x: e.clientX - offset.x });
 
-      if (position.x > gridOffset + memberWidth) {
+      if (position.x - memberWidth * 2 > gridOffset + memberWidth) {
         setGridOffset(gridOffset + memberWidth);
         setItems(handleOverflow('right', items));
-      } else if (position.x < gridOffset) {
+      } else if (position.x - memberWidth * 2 < gridOffset) {
         setGridOffset(gridOffset - memberWidth);
         setItems(handleOverflow('left', items));
       }
