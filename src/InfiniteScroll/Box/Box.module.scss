@@ -1,0 +1,12 @@
+.box {
+  display: flex;
+  border-left: solid 2px green;
+  background-color: orange;
+  height: 150px;
+  
+  > div {
+    font-size: 72px;
+    color: white;
+    margin: auto;
+  }
+}

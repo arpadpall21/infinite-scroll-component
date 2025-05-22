@@ -1,14 +1,13 @@
 .infiniteScrollContainer {
   position: relative;
   border: solid 3px black;
-  height: 150px;
-  width: 1000px;
   margin: auto;
   overflow: hidden;
+  height: 150px;
 
   > div {
     position: absolute;
-    border: solid 5px green;
     text-wrap: nowrap;
+    height: 150px;
   }
 }
