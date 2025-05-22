@@ -1,4 +1,4 @@
-import React, { useState, type ReactNode } from 'react';
+import React, { useState, type ReactElement } from 'react';
 import style from './InfiniteScroll.module.scss';
 
 interface Dimensions {
@@ -9,14 +9,15 @@ interface Dimensions {
 interface Props {
   parentSize: Dimensions;
   membersSize: Dimensions;
-  items: ReactNode[];
+  items: ReactElement[];
+  handleOverflow: (side: 'left' | 'right', _items: ReactElement[]) => ReactElement[];
 }
 
-const InfiniteScroll: React.FC<Props> = ({ items, parentSize, membersSize }) => {
-  const [_items, _setItems] = useState<ReactNode[]>(items);
+const InfiniteScroll: React.FC<Props> = ({ items, parentSize, membersSize, handleOverflow }) => {
+  const [_items, _setItems] = useState<ReactElement[]>(items);
 
 
-  const [childIds, setChildIds] = useState<number[]>([0, 1, 2, 3, 4, 5]);
+  // const [childIds, setChildIds] = useState<number[]>([0, 1, 2, 3, 4, 5]);
 
   const [position, setPosition] = useState({ x: 0 });
   const [isDragging, setIsDragging] = useState(false);
@@ -25,24 +26,30 @@ const InfiniteScroll: React.FC<Props> = ({ items, parentSize, membersSize }) => 
 
   function handleMouseMove(e: React.MouseEvent) {
     if (isDragging) {
+      
       setPosition({ x: e.clientX - offset.x });
       
       // handle right slide
       if (position.x > gridOffset + membersSize.width) {
         setGridOffset(gridOffset + membersSize.width);
+        _setItems(handleOverflow('right', _items));
         
         
-        const childIdsClone = [...childIds];
-        const originalLength = childIdsClone.length;
-        childIdsClone.unshift(childIdsClone[0] - 1);
-        setChildIds(childIdsClone.slice(0, originalLength));
+        console.log('---------------------')
+        console.log(handleOverflow('right', _items))
+        
+        // const childIdsClone = [...childIds];
+        // const originalLength = childIdsClone.length;
+        // childIdsClone.unshift(childIdsClone[0] - 1);
+        // setChildIds(childIdsClone.slice(0, originalLength));
       } else if (position.x < gridOffset) {
         setGridOffset(gridOffset - membersSize.width);
+        _setItems(handleOverflow('left', _items));
         
-        const childIdsClone = [...childIds]
-        childIdsClone.push(childIdsClone[childIdsClone.length -1] + 1);
-        childIdsClone.shift()
-        setChildIds(childIdsClone);
+        // const childIdsClone = [...childIds]
+        // childIdsClone.push(childIdsClone[childIdsClone.length -1] + 1);
+        // childIdsClone.shift()
+        // setChildIds(childIdsClone);
       }
     }
   }

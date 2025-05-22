@@ -1,10 +1,10 @@
 import style from './Box.module.scss';
 
-interface Props {
+export interface BoxProps {
   id: number;
 }
 
-const Box: React.FC<Props> = ({ id }) => {
+const Box: React.FC<BoxProps> = ({ id }) => {
   return (
     <div className={style.box}>
       <div>{id}</div>
