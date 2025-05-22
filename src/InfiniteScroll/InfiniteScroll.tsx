@@ -1,22 +1,19 @@
-import React, { useState, useEffect, type ReactNode } from 'react';
+import React, { useState, type ReactNode } from 'react';
 import style from './InfiniteScroll.module.scss';
 
-const cellWidth = 200;
-
-interface Props {
-  parentWidth: number;
-  membersWidth: number;
-  children?: ReactNode[];
+interface Dimensions {
+  width: number;
+  height: number;
 }
 
-const InfiniteScroll: React.FC<Props> = ({ parentWidth, membersWidth, children }) => {
-  const [members, setMembers] = useState<ReactNode[]>([]);
+interface Props {
+  parentSize: Dimensions;
+  membersSize: Dimensions;
+  items: ReactNode[];
+}
 
-  useEffect(() => {
-    if (children) {
-      setMembers(children);
-    }
-  }, [children]);
+const InfiniteScroll: React.FC<Props> = ({ items, parentSize, membersSize }) => {
+  const [_items, _setItems] = useState<ReactNode[]>(items);
 
 
   const [childIds, setChildIds] = useState<number[]>([0, 1, 2, 3, 4, 5]);
@@ -31,8 +28,8 @@ const InfiniteScroll: React.FC<Props> = ({ parentWidth, membersWidth, children }
       setPosition({ x: e.clientX - offset.x });
       
       // handle right slide
-      if (position.x > gridOffset + cellWidth) {
-        setGridOffset(gridOffset + cellWidth);
+      if (position.x > gridOffset + membersSize.width) {
+        setGridOffset(gridOffset + membersSize.width);
         
         
         const childIdsClone = [...childIds];
@@ -40,7 +37,7 @@ const InfiniteScroll: React.FC<Props> = ({ parentWidth, membersWidth, children }
         childIdsClone.unshift(childIdsClone[0] - 1);
         setChildIds(childIdsClone.slice(0, originalLength));
       } else if (position.x < gridOffset) {
-        setGridOffset(gridOffset - cellWidth);
+        setGridOffset(gridOffset - membersSize.width);
         
         const childIdsClone = [...childIds]
         childIdsClone.push(childIdsClone[childIdsClone.length -1] + 1);
@@ -59,7 +56,7 @@ const InfiniteScroll: React.FC<Props> = ({ parentWidth, membersWidth, children }
   return (
     <div
       className={style.infiniteScrollContainer}
-      style={{ width: parentWidth }}
+      style={{ width: parentSize.width, height: parentSize.height }}
       onMouseLeave={() => setIsDragging(false)}
     >
       <div
@@ -72,19 +69,16 @@ const InfiniteScroll: React.FC<Props> = ({ parentWidth, membersWidth, children }
         onMouseMove={handleMouseMove}
         onMouseUp={() => setIsDragging(false)}
       >
-        {members.map((member, i) => (
+        {_items.map((item, i) => (
           <div
             style={{
               display: 'inline-block',
-              border: 'solid 1px red',
-              height: 130,
-              width: membersWidth,
-              backgroundColor: 'orange',
-              opacity: 0.9,
+              width: membersSize.width,
+              height: membersSize.height,
             }}
             key={i}
           >
-          {member}
+            {item}
           </div>
         ))}
       </div>
