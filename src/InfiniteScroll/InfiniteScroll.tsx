@@ -1,34 +1,31 @@
 import React, { useState, type ReactElement } from 'react';
 import style from './InfiniteScroll.module.scss';
 
-interface Dimensions {
-  width: number;
-  height: number;
-}
-
 interface Props {
-  parentSize: Dimensions;
-  membersSize: Dimensions;
   members: ReactElement[];
   handleOverflow: (side: 'left' | 'right', members: ReactElement[]) => ReactElement[];
 }
 
-const InfiniteScroll: React.FC<Props> = ({ members, parentSize, membersSize, handleOverflow }) => {
+const InfiniteScroll: React.FC<Props> = ({ members, handleOverflow }) => {
   const [items, setItems] = useState<ReactElement[]>(members);
   const [position, setPosition] = useState({ x: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0 });
   const [gridOffset, setGridOffset] = useState<number>(0);
 
+
+  const memberWidth: number = 200;
+
+
   function handleMouseMove(e: React.MouseEvent) {
     if (isDragging) {
       setPosition({ x: e.clientX - offset.x });
 
-      if (position.x > gridOffset + membersSize.width) {
-        setGridOffset(gridOffset + membersSize.width);
+      if (position.x > gridOffset + memberWidth) {
+        setGridOffset(gridOffset + memberWidth);
         setItems(handleOverflow('right', items));
       } else if (position.x < gridOffset) {
-        setGridOffset(gridOffset - membersSize.width);
+        setGridOffset(gridOffset - memberWidth);
         setItems(handleOverflow('left', items));
       }
     }
@@ -41,11 +38,7 @@ const InfiniteScroll: React.FC<Props> = ({ members, parentSize, membersSize, han
   }
 
   return (
-    <div
-      className={style.infiniteScrollContainer}
-      style={{ width: parentSize.width, height: parentSize.height }}
-      onMouseLeave={() => setIsDragging(false)}
-    >
+    <div className={style.infiniteScrollContainer} onMouseLeave={() => setIsDragging(false)}>
       <div
         style={{
           transform: `translate(${position.x}px`,
@@ -60,7 +53,7 @@ const InfiniteScroll: React.FC<Props> = ({ members, parentSize, membersSize, han
           <div
             style={{
               display: 'inline-block',
-              width: membersSize.width,
+              width: memberWidth,
             }}
             key={i}
           >

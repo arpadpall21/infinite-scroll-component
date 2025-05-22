@@ -13,7 +13,7 @@ const defaultMembers: ReactElement[] = [
 
 const App = () => {
   function handleOverflow(side: 'left' | 'right', _items: ReactElement[]) {
-    // example to handle overflow
+    // example how to handle overflow
 
     const memberIds: number[] = _items.map((item) => {
       const p: BoxProps = item.props as BoxProps;
@@ -33,12 +33,7 @@ const App = () => {
 
   return (
     <div style={{ margin: '100px auto' }}>
-      <InfiniteScroll
-        members={defaultMembers}
-        parentSize={{ width: 1000, height: 150 }}
-        membersSize={{ width: 200, height: 150 }}
-        handleOverflow={handleOverflow}
-      />
+      <InfiniteScroll members={defaultMembers} handleOverflow={handleOverflow} />
     </div>
   );
 };

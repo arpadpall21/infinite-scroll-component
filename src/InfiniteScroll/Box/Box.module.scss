@@ -1,7 +1,9 @@
 .box {
   display: flex;
-  border: solid 2px green;
+  border-left: solid 2px green;
   background-color: orange;
+  width: 200px;
+  height: 150px;
   
   > div {
     font-size: 72px;
