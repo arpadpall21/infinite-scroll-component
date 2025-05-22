@@ -2,6 +2,7 @@ import { type ReactElement } from 'react';
 import InfiniteScroll from './InfiniteScroll/InfiniteScroll';
 import Box, { type BoxProps } from './InfiniteScroll/Box/Box';
 
+// example initial members
 const defaultMembers: ReactElement[] = [
   <Box id={-2} />,
   <Box id={-1} />,
@@ -37,7 +38,7 @@ const App = () => {
 
   return (
     <div style={{ margin: '100px auto' }}>
-      <InfiniteScroll members={defaultMembers} handleOverflow={handleOverflow} />
+      <InfiniteScroll parentWidth={1000} membersWidth={200} members={defaultMembers} handleOverflow={handleOverflow} />
     </div>
   );
 };
