@@ -17,10 +17,10 @@ const defaultMembers: ReactElement[] = [
 ];
 
 const App = () => {
-  function handleOverflow(side: 'left' | 'right', _items: ReactElement[]) {
+  function handleOverflow(side: 'left' | 'right', members: ReactElement[]) {
     // example how to handle overflow
 
-    const memberIds: number[] = _items.map((item) => {
+    const memberIds: number[] = members.map((item) => {
       const p: BoxProps = item.props as BoxProps;
       return p.id;
     });
