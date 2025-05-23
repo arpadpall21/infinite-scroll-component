@@ -10,7 +10,7 @@ This infinite scroll React component seamlessly scrolls its members while we are
 The only considerable limitation is that each member must have the same width
 
 ## Requirements
- - Node.js v22.9.0+
+ - Node.js v18.19.0+
 
 ## Setup
   - Run `npm install`
