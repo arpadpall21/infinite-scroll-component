@@ -7,6 +7,8 @@ This infinite scroll React component seamlessly scrolls its members while we are
 - User Experience
   - The user is able to grab members and freely slide them left or right (no flicker, no jump, no pagination buttons, although the code can be easily adjusted for those purposes as well)
 
+The only considerable limitation is that each member must have the same width
+
 ## Requirements
  - Node.js v22.9.0+
 
@@ -14,7 +16,7 @@ This infinite scroll React component seamlessly scrolls its members while we are
   - Run `npm install`
 
 ## Usage
-  - The intent here is to provide the InfiniteScroll component, but you can start the React server with npm start so you can try it out
+  - The intent here is to provide the `InfiniteScroll` component, but you can start the React server with `npm start` so you can try it out
 #### `InifiniteScroll` Component Configurations
 - The `parentWidth` and the `membersWidth` props set the width for the parent and for each member that will be scrolled
   - In the example, the parent is 1000px and members are 200px wide, which means 5 members will be visible at a time  
