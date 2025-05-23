@@ -27,3 +27,4 @@ The only considerable limitation is that each member must have the same width
   - Example provided
 
 ## Background Story
+I needed this infinite scroll solution for my `Software Versions Timeline` project, where each member contains approximately 20 HTML elements, but over 24 members need to be visible (which amounts to around 500 HTML elements!). All of these elements need to be freely scrollable by the user, allowing them to scroll through a timeline spanning over 20+ years. So smooth scrolling performance and the best possible user experience was the primary focus.
